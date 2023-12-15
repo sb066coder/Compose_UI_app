@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,10 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -35,10 +31,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GreetingImage(
-                        message = getString(R.string.greeting_text),
-                        from = getString(R.string.from_name)
-                    )
+                    Column(
+                        verticalArrangement = Arrangement.Top,
+                        modifier = Modifier
+                    ) {
+                        HeaderImage()
+                        ContentText(
+                            headerText = getString(R.string.header),
+                            introText = getString(R.string.intro),
+                            content = getString(R.string.content)
+                        )
+                    }
                 }
             }
         }
@@ -46,56 +49,67 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
+fun ContentText(
+    headerText: String,
+    introText: String,
+    content: String,
+    modifier: Modifier = Modifier
+) {
     Column(
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         modifier = modifier
     ) {
         Text(
-            text = message,
-            fontSize = 84.sp,
-            lineHeight = 150.sp,
+            text = headerText,
+            fontSize = 24.sp,
             textAlign = TextAlign.Center,
-            color = Color.Black
+            modifier = Modifier.padding(16.dp)
+
         )
         Text(
-            text = from,
-            fontSize = 36.sp,
+            text = introText,
             modifier = Modifier
-                .padding(16.dp)
-                .align(alignment = Alignment.CenterHorizontally),
-            color = Color.Black
+                .padding(
+                    start = 16.dp,
+                    end = 16.dp
+                ),
+            textAlign = TextAlign.Justify
+        )
+        Text(
+            text = content,
+            modifier = Modifier
+                .padding(16.dp),
+            textAlign = TextAlign.Justify
         )
     }
 }
 
 @Composable
-fun GreetingImage(message: String, from: String, modifier: Modifier = Modifier) {
-    val image = painterResource(id = R.drawable.androidparty)
-    Box {
-        Image(
-            painter = image,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            alpha = 0.7f
-        )
-        GreetingText(
-            message = message,
-            from = from,
-            modifier
-                .fillMaxSize()
-                .padding(8.dp)
-        )
+fun HeaderImage(modifier: Modifier = Modifier) {
+    val image = painterResource(id = R.drawable.bg_compose_background)
+    Image(
+        modifier = modifier,
+        painter = image,
+        contentDescription = null
+    )
+}
+
+@Preview(showBackground = false)
+@Composable
+fun HeaderPreview() {
+    ComposeUIAppTheme {
+        HeaderImage()
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BirthdayCardPreview() {
+fun ContentTextPreview() {
     ComposeUIAppTheme {
-        GreetingImage(
-            message = stringResource(R.string.greeting_text),
-            from = stringResource(R.string.from_name)
+        ContentText(
+            headerText = stringResource(R.string.header),
+            introText = stringResource(R.string.intro),
+            content = stringResource(R.string.content)
         )
     }
 }
