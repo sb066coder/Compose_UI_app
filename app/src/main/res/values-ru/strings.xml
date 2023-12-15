@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Compose UI app</string>
+    <string name="from_name">Мое имя</string>
+    <string name="greeting_text">С днем рождения, Имя!</string>
+</resources>

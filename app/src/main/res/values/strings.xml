@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Compose UI app</string>
+    <string name="from_name">MyName</string>
+    <string name="greeting_text">Happy birthday, Name!</string>
+</resources>
